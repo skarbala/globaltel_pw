@@ -93,6 +93,8 @@ test("create new spell", async ({ request }) => {
 
   //dotiahneme detail kuzla pomocou ID
   //ulozim si id do premennej
+  const spellId = body.spell.id;
   //zavolam get request s tymto id
   //overim ze sa mi vratilo vytvorene kuzlo
+  await request.get("http://localhost:3000/spells/" + spellId);
 });
