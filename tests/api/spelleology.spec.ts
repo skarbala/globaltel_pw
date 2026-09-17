@@ -1,0 +1,40 @@
+import { test, expect } from "@playwright/test";
+
+test("return all spells", async ({ request }) => {
+  //1.poslem request na endpoint /spells
+  const response = await request.get("http://localhost:3000/spells");
+  //2.overim status odpovede -> SAMOSTATNE
+  //status ma presny kod
+  expect(response.status()).toBe(200);
+  //status ma kod medzi 200-299
+  expect(response.ok()).toBeTruthy();
+  const body = await response.json();
+  //3.overim data (ze je tam aspon 1 kuzlo)
+  expect(body.length).toBeGreaterThan(0);
+  //4.overim ze kazde kuzlo ma vyplneny nazov
+  body.forEach((item) => {
+    expect(item.spell).toBeTruthy();
+    expect(item.id).toBeTruthy();
+  });
+});
+
+//TODO: get spells by type, limit, isUnforgivable
+test("returns spells by desired type", async ({ request }) => {
+  //do konstanty si ulozim vybraty typ
+  const expectedType = "Hex";
+  //zavolam request s query parametrom
+  const response = await request.get("http://localhost:3000/spells", {
+    params: {
+      type: expectedType,
+    },
+  });
+  //overim ze odpoved je ok
+  expect(response.ok()).toBeTruthy();
+  const body = await response.json();
+  //overim ze odpoved ma aspon jedneho clena
+  expect(body.length).toBeGreaterThan(0);
+  // pre kazdeho clena overim ze ma spravny typ
+  body.forEach((item) => {
+    expect(item.type).toEqual(expectedType);
+  });
+});
