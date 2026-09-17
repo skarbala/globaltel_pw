@@ -5,9 +5,24 @@ test("display message on sort click", async ({ page }) => {
   await page.getByRole("button", { name: "Sort me" }).click();
 
   //1. pockam na odpoved z backendu
-  await page.waitForResponse("http://localhost:3000/sortingHat");
-  //2. overim status odpovede
-  //3. vytiahnem data z odpovede
+  const response = await page.waitForResponse("**/sortingHat");
+  expect(
+    response.status(),
+    `Chyba backendu, nevratil 201 ale vratil ${response.status()}`,
+  ).toBe(201);
+
+  const body = await response.json();
+  expect(body.sortingHatSays).toBeTruthy();
+  expect(body.house).toBeTruthy();
+
+  //4. overim ze data sa spravne zobrazia na stranke
   await expect(page.locator('[data-test="result-message"]')).toBeVisible();
+  await expect(page.locator('[data-test="result-message"]')).toHaveText(
+    body.sortingHatSays,
+  );
+
   await expect(page.locator('[data-test="house-result"]')).toBeVisible();
+  await expect(page.locator('[data-test="house-result"]')).toHaveText(
+    body.house,
+  );
 });

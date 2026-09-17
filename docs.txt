@@ -1,0 +1,7 @@
+https://documenter.getpostman.com/view/6199862/SzYewFs9
+
+PROD BE:https://potterapi-tgq2.onrender.com/
+PROD FE: https://potter-api.vercel.app/
+
+LOCAL BE: http://localhost:3000
+LOCAL FE: http://localhost:8080
