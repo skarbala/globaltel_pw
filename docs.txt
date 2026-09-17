@@ -5,3 +5,8 @@ PROD FE: https://potter-api.vercel.app/
 
 LOCAL BE: http://localhost:3000
 LOCAL FE: http://localhost:8080
+
+Libs:
+https://fakerjs.dev/
+https://playwright.dev/agent-cli/introduction
+https://playwright.dev/agent-cli/skills
