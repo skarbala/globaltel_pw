@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 test("create an offer with correct data", async ({ page }) => {
   const fund = "Death Eater Dominance Fund";
 
-  await page.goto("http://localhost:8080/#/gringottsBank");
+  await page.goto("/#/gringottsBank");
   // page.locator("[id=selectedFund]");
 
   await page.locator("#selectedFund").selectOption(fund);
