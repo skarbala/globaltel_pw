@@ -83,4 +83,7 @@ test("create new spell", async ({ request }) => {
 
   console.log(await response.json());
   //2. overim odpoved
+  // overte ze odpoved ma status 200-299
+  //overte ze v odpovedi je sprava "Spell created"
+  //overte ze v odpovedi sa nachazdza id vytvoreneho kuzla
 });
