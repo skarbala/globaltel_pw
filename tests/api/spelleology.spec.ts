@@ -38,3 +38,29 @@ test("returns spells by desired type", async ({ request }) => {
     expect(item.type).toEqual(expectedType);
   });
 });
+
+test("returns spells of desired limit", async ({ request }) => {
+  const expectedLimit = 3;
+  const response = await request.get("http://localhost:3000/spells", {
+    params: {
+      limit: expectedLimit,
+    },
+  });
+  const body = await response.json();
+  expect(body.length).toBe(expectedLimit);
+});
+
+test("returns unforgivable spells only", async ({ request }) => {
+  const response = await request.get("http://localhost:3000/spells", {
+    params: {
+      isUnforgivable: true,
+    },
+  });
+  const body = await response.json();
+
+  expect(body.length).toBeGreaterThanOrEqual(3);
+
+  body.forEach((item) => {
+    expect(item.isUnforgivable).toEqual(true);
+  });
+});
