@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { faker } from "@faker-js/faker";
 
 test("return all spells", async ({ request }) => {
   //1.poslem request na endpoint /spells
@@ -63,4 +64,23 @@ test("returns unforgivable spells only", async ({ request }) => {
   body.forEach((item) => {
     expect(item.isUnforgivable).toEqual(true);
   });
+});
+
+//vytvorime novy test -> create new spell
+//zavolame POST request na novy spell
+//overime ze spell bol vytvoreny (vrati sa nam ID)
+
+test("create new spell", async ({ request }) => {
+  //1. zavolam POST request
+  const response = await request.post("http://localhost:3000/spells", {
+    data: {
+      spell: "Corona",
+      effect: "sneezing forever",
+      type: "Curse",
+      isUnforgivable: "false",
+    },
+  });
+
+  console.log(await response.json());
+  //2. overim odpoved
 });
