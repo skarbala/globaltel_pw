@@ -90,4 +90,9 @@ test("create new spell", async ({ request }) => {
 
   //overte ze v odpovedi sa nachazdza id vytvoreneho kuzla
   expect(body.spell.id).toBeTruthy();
+
+  //dotiahneme detail kuzla pomocou ID
+  //ulozim si id do premennej
+  //zavolam get request s tymto id
+  //overim ze sa mi vratilo vytvorene kuzlo
 });
