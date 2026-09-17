@@ -71,30 +71,38 @@ test("returns unforgivable spells only", async ({ request }) => {
 //overime ze spell bol vytvoreny (vrati sa nam ID)
 
 test("create new spell", async ({ request }) => {
+  const newSpell = {
+    spell: faker.book.title(),
+    effect: "sneezing forever",
+    type: "Curse",
+    isUnforgivable: "false",
+  };
+  //Java Script Object Notation
+
   const response = await request.post("http://localhost:3000/spells", {
-    data: {
-      spell: faker.book.title(),
-      effect: "sneezing forever",
-      type: "Curse",
-      isUnforgivable: "false",
-    },
+    data: newSpell,
   });
+
   const body = await response.json();
   // overte ze odpoved ma status 200-299
   expect(response.ok()).toBeTruthy();
   expect(response.ok()).toBe(true);
   await expect(response).toBeOK();
-
-  //overte ze v odpovedi je sprava "Spell created"
   expect(body.message).toEqual("Spell created");
 
   //overte ze v odpovedi sa nachazdza id vytvoreneho kuzla
   expect(body.spell.id).toBeTruthy();
-
-  //dotiahneme detail kuzla pomocou ID
-  //ulozim si id do premennej
   const spellId = body.spell.id;
-  //zavolam get request s tymto id
-  //overim ze sa mi vratilo vytvorene kuzlo
-  await request.get("http://localhost:3000/spells/" + spellId);
+
+  const spellDetailResponse = await request.get(
+    "http://localhost:3000/spells/" + spellId,
+  );
+
+  expect(spellDetailResponse.ok()).toBeTruthy();
+  const spellDetailBody = await spellDetailResponse.json();
+
+  expect(spellDetailBody.id).toEqual(spellId);
+  expect(spellDetailBody.spell).toEqual(newSpell.spell);
+  expect(spellDetailBody.effect).toEqual(newSpell.effect);
+  expect(spellDetailBody.type).toEqual(newSpell.type);
 });
