@@ -71,7 +71,6 @@ test("returns unforgivable spells only", async ({ request }) => {
 //overime ze spell bol vytvoreny (vrati sa nam ID)
 
 test("create new spell", async ({ request }) => {
-  //1. zavolam POST request
   const response = await request.post("http://localhost:3000/spells", {
     data: {
       spell: faker.book.title(),
@@ -80,10 +79,15 @@ test("create new spell", async ({ request }) => {
       isUnforgivable: "false",
     },
   });
-
-  console.log(await response.json());
-  //2. overim odpoved
+  const body = await response.json();
   // overte ze odpoved ma status 200-299
+  expect(response.ok()).toBeTruthy();
+  expect(response.ok()).toBe(true);
+  await expect(response).toBeOK();
+
   //overte ze v odpovedi je sprava "Spell created"
+  expect(body.message).toEqual("Spell created");
+
   //overte ze v odpovedi sa nachazdza id vytvoreneho kuzla
+  expect(body.spell.id).toBeTruthy();
 });
