@@ -74,7 +74,7 @@ test("create new spell", async ({ request }) => {
   //1. zavolam POST request
   const response = await request.post("http://localhost:3000/spells", {
     data: {
-      spell: "Corona",
+      spell: faker.book.title(),
       effect: "sneezing forever",
       type: "Curse",
       isUnforgivable: "false",
